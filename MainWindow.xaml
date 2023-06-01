@@ -8,6 +8,27 @@
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         <Button x:Name="btnDemo" Content="D" HorizontalAlignment="Left" Margin="760,406,0,0" VerticalAlignment="Top" Height="18" Width="16" Click="btnDemo_Click"/>
+        <ListView x:Name="lvStudents" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="261,43,64,76">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="First Name" DisplayMemberBinding="{Binding FirstName}"/>
+                    <GridViewColumn Header="Last Name" DisplayMemberBinding="{Binding LastName}"/>
+                    <GridViewColumn Header="CSI Grade" DisplayMemberBinding="{Binding CsiGrade}"/>
+                    <GridViewColumn Header="Gen Ed Grade" DisplayMemberBinding="{Binding GenEdGrade}"/>
+                    <GridViewColumn Header="Grade Average" DisplayMemberBinding="{Binding Average}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Button x:Name="btnSaveToList" Content="Save To List" HorizontalAlignment="Left" Margin="31,312,0,0" VerticalAlignment="Top" Height="35" Width="199" Click="btnSaveToList_Click"/>
+        <TextBox x:Name="txtFirst" HorizontalAlignment="Left" Margin="42,93,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="177"/>
+        <Label Content="First Name" HorizontalAlignment="Left" Margin="42,62,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtLast" HorizontalAlignment="Left" Margin="42,147,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="177"/>
+        <Label Content="Last Name" HorizontalAlignment="Left" Margin="42,116,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtCSI" HorizontalAlignment="Left" Margin="42,201,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="177"/>
+        <Label Content="CSI Grade" HorizontalAlignment="Left" Margin="42,170,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtGenEd" HorizontalAlignment="Left" Margin="42,265,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="177"/>
+        <Label Content="GenEdGrade" HorizontalAlignment="Left" Margin="42,234,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="btnSaveToCSV" Content="Save To CSV" HorizontalAlignment="Left" Margin="31,373,0,0" VerticalAlignment="Top" Height="42" Width="199" Click="btnSaveToCSV_Click"/>
 
     </Grid>
 </Window>

@@ -16,22 +16,49 @@ namespace Prog_124_S23_L14_CSVReadWrite
     public partial class MainWindow : Window
     {
 
-        const string filePath = "students";
+        const string filePath = "students.csv";
+        public List<Student> loadedStudents = new List<Student>();
 
         public MainWindow()
         {
             InitializeComponent();
-            Preload();
+
+            var manyObjects = new List<object>
+            {
+                0,
+                "true",
+                true
+            };
 
 
-            //SaveCSVFile("studentMethod", students);
+            //Preload();
+            // Load my list of students from our csv file
+            using (StreamReader sr = new StreamReader(filePath))
+            using (CsvReader csv = new CsvReader(sr, CultureInfo.InvariantCulture))
+            {
+                // We are saving a list of an object to work with in our program
+                loadedStudents = csv.GetRecords<Student>().ToList();
+            }
 
-            //using (StreamReader sr = new StreamReader(filePath))
-            //using (CsvReader csv = new CsvReader(sr, CultureInfo.InvariantCulture))
-            //{
+            //MessageBox.Show(loadedStudents.Count.ToString());
 
-            //    players = csv.GetRecords<T>().ToList();
-            //}
+            // Load our lv FROM our loadedStudents list
+            lvStudents.ItemsSource = loadedStudents;
+        }
+
+        public void LoadCSV(List<Student> list)
+        {
+            // Loading a csv file to a list of type that we can work with
+
+            using (StreamReader sr = new StreamReader(filePath))
+            using (CsvReader csv = new CsvReader(sr, CultureInfo.InvariantCulture))
+            {
+                // We are saving a list of an object to work with in our program
+                list = csv.GetRecords<Student>().ToList();
+            }
+
+
+            MessageBox.Show(loadedStudents.Count.ToString());
 
         }
 
@@ -56,14 +83,14 @@ namespace Prog_124_S23_L14_CSVReadWrite
             CultureInfo ci = CultureInfo.InvariantCulture;
 
             // Make sure to include the extension
-            string csvExtension = ".csv";
-            string txtExtension = ".txt";
-            string fullPath = filePath + csvExtension;
+            //string csvExtension = ".csv";
+            //string txtExtension = ".txt";
+            //string fullPath = filePath + csvExtension;
 
             //// usings
             ///
             // First using is opening the connection to our file
-            using (var stream = File.Open(fullPath, FileMode.OpenOrCreate))
+            using (var stream = File.Open(filePath, FileMode.OpenOrCreate))
             {
                 using (var writer = new StreamWriter(stream))
                 {
@@ -88,5 +115,27 @@ namespace Prog_124_S23_L14_CSVReadWrite
         {
             new CSVExample.Demonstration_Code().Show();
         }
-    }
-}
+
+        private void btnSaveToList_Click(object sender, RoutedEventArgs e)
+        {
+            string firstName = txtFirst.Text;
+            string lastName = txtLast.Text;
+            int csi = int.Parse(txtCSI.Text);
+            int genEd = int.Parse(txtGenEd.Text);
+
+            loadedStudents.Add(new Student(firstName, lastName, csi, genEd));
+
+            lvStudents.Items.Refresh();
+
+            SaveCSVFile(filePath, loadedStudents);
+            MessageBox.Show("Students were saved to the csv");
+
+        } // btnSaveToList_Click
+
+        private void btnSaveToCSV_Click(object sender, RoutedEventArgs e)
+        {
+            SaveCSVFile(filePath, loadedStudents);
+        }
+    } // class
+
+} // namespace
