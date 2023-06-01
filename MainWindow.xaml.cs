@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using CsvHelper;
+
+
 
 namespace Prog_124_S23_L14_CSVReadWrite
 {
@@ -20,10 +15,74 @@ namespace Prog_124_S23_L14_CSVReadWrite
     /// </summary>
     public partial class MainWindow : Window
     {
+
+        const string filePath = "students";
+
         public MainWindow()
         {
             InitializeComponent();
+            Preload();
+
+
+            //SaveCSVFile("studentMethod", students);
+
+            //using (StreamReader sr = new StreamReader(filePath))
+            //using (CsvReader csv = new CsvReader(sr, CultureInfo.InvariantCulture))
+            //{
+
+            //    players = csv.GetRecords<T>().ToList();
+            //}
+
         }
+
+        // How to make a preload method to help generate a csv file to work with
+        public void Preload()
+        {
+            List<Student> students = new List<Student>
+            {
+                new Student("Will", "Cram", 57, 93),
+                new Student("Josh", "Emery", 101, 105)
+            };
+
+            SaveCSVFile(filePath, students);
+        }
+
+        // Two fields that will ever change
+        // the file path 
+        // the list
+        public void SaveCSVFile<T>(string filePath, List<T> list)
+        {
+
+            CultureInfo ci = CultureInfo.InvariantCulture;
+
+            // Make sure to include the extension
+            string csvExtension = ".csv";
+            string txtExtension = ".txt";
+            string fullPath = filePath + csvExtension;
+
+            //// usings
+            ///
+            // First using is opening the connection to our file
+            using (var stream = File.Open(fullPath, FileMode.OpenOrCreate))
+            {
+                using (var writer = new StreamWriter(stream))
+                {
+                    using (var csvWriter = new CsvWriter(writer, ci))
+                    {
+                        // .WriteRecords(list);
+                        // WriteRecords(list)
+                        // Your class needs to have public properties in order to be properly written
+                        csvWriter.WriteRecords(list);
+                        // writer.Flush()
+                        writer.Flush();
+                    }
+                }
+
+            }
+
+        } // SaveCSVFile
+
+        // Reading CSV Data
 
         private void btnDemo_Click(object sender, RoutedEventArgs e)
         {
