@@ -6,7 +6,29 @@
         xmlns:local="clr-namespace:Prog_124_S23_L14_CSVReadWrite.CSVExample"
         mc:Ignorable="d"
         Title="Demonstration_Code" Height="450" Width="800">
-    <Grid Background="#FFFFB9B9">
-        
-    </Grid>
+    <Canvas Background="#FFFFB9B9">
+        <ListView x:Name="lvPlayers" d:ItemsSource="{d:SampleData ItemCount=5}" Height="233" Canvas.Left="282" Canvas.Top="38" Width="412" HorizontalAlignment="Center" VerticalAlignment="Top">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="FirstName" DisplayMemberBinding="{Binding FirstName}"/>
+                    <GridViewColumn Header="FirstName" DisplayMemberBinding="{Binding Class}"/>
+                    <GridViewColumn Header="FirstName" DisplayMemberBinding="{Binding CurrentHp}"/>
+                    <GridViewColumn Header="FirstName" DisplayMemberBinding="{Binding MaxHp}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Label Content="Name" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Left="36" Canvas.Top="41"/>
+        <TextBox x:Name="txtName" Canvas.Left="36" TextWrapping="Wrap" Canvas.Top="72" Width="185" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        <Label Content="Class" Canvas.Left="36" Canvas.Top="95" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtClass" Canvas.Left="36" TextWrapping="Wrap" Canvas.Top="126" Width="185" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="txtClass_TextChanged"/>
+        <Label Content="Current Hp" Canvas.Left="36" Canvas.Top="150" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtCurrentHp" Canvas.Left="36" TextWrapping="Wrap" Canvas.Top="181" Width="185" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+        <Label Content="Max Hp" Canvas.Left="36" Canvas.Top="204" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtMaxHp" Canvas.Left="36" TextWrapping="Wrap" Canvas.Top="235" Width="185" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+        <Button x:Name="btnSave" Content="Save" Canvas.Left="21" Canvas.Top="354" Height="38" Width="200"/>
+        <Button x:Name="btnLoad" Content="Load" Canvas.Left="264" Canvas.Top="354" Height="38" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center" Click="btnLoad_Click"/>
+        <Button x:Name="btnPreload" Content="Preload" Canvas.Left="494" Canvas.Top="354" Height="38" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center" Click="btnPreload_Click"/>
+        <Button x:Name="btnSaveToCurrentList" Content="Save To Current List" Canvas.Left="29" Canvas.Top="280" Height="30" Width="199"/>
+
+    </Canvas>
 </Window>

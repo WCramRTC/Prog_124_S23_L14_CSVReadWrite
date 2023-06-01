@@ -22,30 +22,29 @@ namespace Prog_124_S23_L14_CSVReadWrite.CSVExample
     /// </summary>
     public partial class Demonstration_Code : Window
     {
+
+        List<Player> playerList = new List<Player>();
+
+        string filePath = "players.csv";
         public Demonstration_Code()
         {
             InitializeComponent();
-            Preload();
+            //Preload();
+
+            //LoadCsv(filePath, playerList);
+            using (StreamReader sr = new StreamReader(filePath))
+            using (CsvReader csv = new CsvReader(sr, CultureInfo.InvariantCulture))
+            {
+
+                playerList = csv.GetRecords<Player>().ToList();
+            }
+
+            lvPlayers.ItemsSource = playerList;
 
         } // Demonstration_Code
 
-
-        public void Preload()
-        {
-
-            List<Player> players = new List<Player>
-            {
-                new Player("Will", "Professor", 20, 56),
-                new Player("Josh", "Professor", 30, 35)
-            };
-
-            SaveCSV("players.csv", players);
-
-        }
-
         public void SaveCSV<T>(string filePath, List<T> list)
         {
-
 
             CultureInfo ci = CultureInfo.InvariantCulture;
 
@@ -57,6 +56,7 @@ namespace Prog_124_S23_L14_CSVReadWrite.CSVExample
                 csvWriter.WriteRecords(list);
                 writer.Flush();
             }
+
         } // LoadCSV
 
         public void LoadCsv<T>(string filePath, List<T> list)
@@ -66,8 +66,11 @@ namespace Prog_124_S23_L14_CSVReadWrite.CSVExample
             using (CsvReader csv = new CsvReader(sr, CultureInfo.InvariantCulture))
             {
 
-                players = csv.GetRecords<T>().ToList();
+                list = csv.GetRecords<T>().ToList();
             }
+
+            lvPlayers.ItemsSource = playerList;
+
         }
 
 
@@ -79,6 +82,8 @@ namespace Prog_124_S23_L14_CSVReadWrite.CSVExample
             string _class;
             int _currentHp;
             int _maxHp;
+
+            public Player() { }
 
             public Player(string firstName, string @class, int currentHp, int maxHp)
             {
@@ -94,11 +99,35 @@ namespace Prog_124_S23_L14_CSVReadWrite.CSVExample
             public int MaxHp { get => _maxHp; set => _maxHp = value; }
         }
 
+        private void txtClass_TextChanged(object sender, TextChangedEventArgs e)
+        {
 
 
-         
+        }
 
-         
+        private void btnPreload_Click(object sender, RoutedEventArgs e)
+        {
+            Preload();
+        }
+
+        public void Preload()
+        {
+
+            List<Player> players = new List<Player>
+            {
+                new Player("Will", "Professor", 20, 56),
+                new Player("Josh", "Professor", 30, 35)
+            };
+
+            SaveCSV("players.csv", players);
+
+        }
+
+        private void btnLoad_Click(object sender, RoutedEventArgs e)
+        {
+            LoadCsv(filePath, playerList);
+            MessageBox.Show(playerList.Count.ToString());
+        }
     } // class
 
 } // namespace
