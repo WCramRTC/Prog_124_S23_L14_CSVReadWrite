@@ -22,45 +22,41 @@ namespace Prog_124_S23_L14_CSVReadWrite
         public MainWindow()
         {
             InitializeComponent();
+            Preload(); // COMMENT THIS OUT TO TEST YOUR OWN SAVE 
 
-            var manyObjects = new List<object>
-            {
-                0,
-                "true",
-                true
-            };
+            //LoadCSV(filePath, loadedStudents); // Old LoadCSV Call
 
+            loadedStudents = LoadCSV<Student>(filePath);
 
-            //Preload();
-            // Load my list of students from our csv file
+            lvStudents.ItemsSource = loadedStudents;
+        }
+
+        public List<T> LoadCSV<T>(string filePath)
+        {
+            // Loading a csv file to a list of type that we can work with
+            List<T> tempList = new List<T>();
             using (StreamReader sr = new StreamReader(filePath))
             using (CsvReader csv = new CsvReader(sr, CultureInfo.InvariantCulture))
             {
                 // We are saving a list of an object to work with in our program
-                loadedStudents = csv.GetRecords<Student>().ToList();
+                tempList = csv.GetRecords<T>().ToList();
             }
 
-            //MessageBox.Show(loadedStudents.Count.ToString());
-
-            // Load our lv FROM our loadedStudents list
-            lvStudents.ItemsSource = loadedStudents;
+            return tempList;
         }
 
-        public void LoadCSV(List<Student> list)
+        public void LoadCSV(string filePath, List<Student> list)
         {
             // Loading a csv file to a list of type that we can work with
-
             using (StreamReader sr = new StreamReader(filePath))
             using (CsvReader csv = new CsvReader(sr, CultureInfo.InvariantCulture))
             {
                 // We are saving a list of an object to work with in our program
                 list = csv.GetRecords<Student>().ToList();
             }
-
-
-            MessageBox.Show(loadedStudents.Count.ToString());
-
         }
+
+
 
         // How to make a preload method to help generate a csv file to work with
         public void Preload()
