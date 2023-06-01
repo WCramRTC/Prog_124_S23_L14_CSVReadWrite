@@ -24,5 +24,10 @@ namespace Prog_124_S23_L14_CSVReadWrite
         {
             InitializeComponent();
         }
+
+        private void btnDemo_Click(object sender, RoutedEventArgs e)
+        {
+            new CSVExample.Demonstration_Code().Show();
+        }
     }
 }
